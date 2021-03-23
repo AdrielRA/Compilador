@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Compiladores</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <nav>
+      <img src="assets/logo.png" alt="logo" />
+      <div>
+        <button
+          type="button"
+          onclick="document.getElementById('file').click();"
+        >
+          📂 ABRIR
+        </button>
+        <button type="button" onclick="saveCode()">💾 SALVAR</button>
+        <input
+          type="file"
+          id="file"
+          style="display: none"
+          accept=".bro"
+          onchange="onSelectFile()"
+        />
+        <button type="button" onclick="writeString()">EXECUTAR ►</button>
+      </div>
+    </nav>
+    <div>
+      <div class="textarea-wrapper">
+        <textarea
+          id="code"
+          rows="10"
+          cols="40"
+          onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}"
+        ></textarea>
+      </div>
+      <div id="output-area">
+        <div>
+          <strong>Saída:</strong
+          ><button id="btn-export" type="button" onclick="exportTokens()">
+            EXPORTAR 📜
+          </button>
+        </div>
+        <p id="output">Nada para exibir...</p>
+        <table id="table">
+          <thead>
+            <tr>
+              <th>Posição</th>
+              <th>Lexema</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <p id="error"></p>
+      </div>
+    </div>
+  </body>
+</html>
