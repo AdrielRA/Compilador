@@ -90,8 +90,8 @@ const joinOperators = (words) =>
           words[i + 1] = undefined;
           return op;
         } else {
-          if (isNumber(words[i + 2])) {
-            let num = words[i + 1] + words[i + 2];
+          let num = words[i + 1] + words[i + 2];
+          if (isNumber(num)) {
             words[i + 1] = num;
             words[i + 2] = undefined;
             return w;
