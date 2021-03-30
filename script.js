@@ -64,7 +64,7 @@ const build = () => {
   const code = input.value;
   let tokens = [];
 
-  if (!code.length) sendError("Código vazio.");
+  if (!code.trim().length) sendError("Código vazio.");
 
   code.split(/\n/).map((line, i) => {
     if (line.match(/"/g)?.length % 2)
@@ -74,7 +74,10 @@ const build = () => {
   let words = code
     .split(/\s|"(.*?)"|([\+\-\/%[\]\{}*(<>)=,!])/)
     .filter((w) => !!w);
+
   words = joinOperators(words);
+
+  if (!words.length) sendError("Nenhum token gerado");
 
   words.forEach((w) => tokens.push(getToken(w)));
   output.textContent = tokens.join(" ");
