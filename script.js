@@ -57,7 +57,7 @@ const operators = [
 const isNumber = (word) => Number(word);
 const isKeyword = (word) => keywords.includes(word);
 const isOperator = (word) => operators.includes(word);
-const isString = (word) => word.includes(" ");
+const isString = (word) => word.includes('"');
 
 const build = () => {
   reset();
@@ -72,9 +72,10 @@ const build = () => {
   });
 
   let words = code
-    .split(/\s|"(.*?)"|([\+\-\/%[\]\{}*(<>)=,!])/)
+    .split(/\s|("(.*?)")+|([\+\-\/%[\]\{}*(<>)=,!])/)
     .filter((w) => !!w);
 
+  words = removeDuplicateStr(words);
   words = joinOperators(words);
 
   if (!words.length) sendError("Nenhum token gerado");
@@ -82,6 +83,14 @@ const build = () => {
   words.forEach((w) => tokens.push(getToken(w)));
   output.textContent = tokens.join(" ");
 };
+
+const removeDuplicateStr = (words) =>
+  words
+    .map((w, i) => {
+      if (w?.includes('"')) words[i + 1] = undefined;
+      return w;
+    })
+    .filter((w) => !!w);
 
 const joinOperators = (words) =>
   words
